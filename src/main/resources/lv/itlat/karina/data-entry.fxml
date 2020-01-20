@@ -6,9 +6,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lv.itlat.karina.DataEntry"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="lv.itlat.karina.DataEntryController">
 
-</AnchorPane>
+    <center>
+        <GridPane vgap="8" hgap="8">
+            <Label text="Enter your name: " GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="Mobile phone" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Email" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        </GridPane>
+
+    </center>
+    <bottom>
+
+        <HBox spacing="10" alignment="BASELINE_RIGHT">
+            <Button text="Ladno"/>
+            <Button text="Net uz"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

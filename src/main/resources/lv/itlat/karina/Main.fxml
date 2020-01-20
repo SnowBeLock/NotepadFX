@@ -13,7 +13,7 @@
     <top>
 
         <HBox>
-            <Button text="Hmm..."/>
+            <Button text="Hmm..." onAction="#addRecord"/>
 
         </HBox>
     </top>

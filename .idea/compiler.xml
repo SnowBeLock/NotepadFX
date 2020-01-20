@@ -9,5 +9,8 @@
         <module name="NotepadFX" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="NotepadFX" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
