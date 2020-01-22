@@ -42,6 +42,8 @@ public class DataEntryForm extends BorderPane {
     }
 
     public Record showAndGet() {
+        nameField.setText("ALEX");
+
         stage.showAndWait();
         if (isOk) {
             var record = new Record();
