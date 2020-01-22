@@ -8,7 +8,7 @@
 
 <fx:root xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            type="lv.itlat.karina.MainController"
+            type="lv.itlat.karina.MainForm"
             prefHeight="400.0" prefWidth="600.0">
     <top>
 
