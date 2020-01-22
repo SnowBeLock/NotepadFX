@@ -6,23 +6,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <fx:root xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            type="lv.itlat.karina.MainForm"
-            prefHeight="400.0" prefWidth="600.0">
+         xmlns:fx="http://javafx.com/fxml"
+         type="lv.itlat.karina.MainForm"
+         prefHeight="400.0" prefWidth="600.0">
     <top>
 
         <HBox>
-            <Button text="Hmm..." onAction="#addRecord"/>
+            <Button text="Create" onAction="#addRecord"/>
             <Button text="Search" onAction="#Search"/>
+            <Button text="Edit" onAction="#editRecord"/>
         </HBox>
     </top>
     <center>
-        <TableView>
+        <TableView fx:id="recordsTable">
             <columns>
-                <TableColumn text="Name"/>
-                <TableColumn text="Email"/>
-                <TableColumn text="Phone Nr"/>
+                <TableColumn text="Name">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name"/>
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Email">
+                <cellValueFactory>
+                    <PropertyValueFactory property="email"/>
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Phone Nr">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="phone"/>
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
         </TableView>
     </center>
