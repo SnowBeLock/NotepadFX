@@ -6,15 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<fx:root xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lv.itlat.karina.MainController"
+            type="lv.itlat.karina.MainController"
             prefHeight="400.0" prefWidth="600.0">
     <top>
 
         <HBox>
             <Button text="Hmm..." onAction="#addRecord"/>
-
+            <Button text="Search" onAction="#Search"/>
         </HBox>
     </top>
     <center>
@@ -26,4 +26,4 @@
             </columns>
         </TableView>
     </center>
-</BorderPane>
+</fx:root>
