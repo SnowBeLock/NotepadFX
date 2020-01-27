@@ -41,12 +41,11 @@ public class DataEntryForm extends BorderPane {
 
     }
 
-    public Record showAndGet() {
-        nameField.setText("ALEX");
+    public Record showAndGet(Record existingRecord) {
 
         stage.showAndWait();
         if (isOk) {
-            var record = new Record();
+            var record =existingRecord==null?new Record():existingRecord;
             record.setName(nameField.getText());
             record.setEmail(emailField.getText());
             record.setPhone(phoneField.getText());
@@ -55,6 +54,8 @@ public class DataEntryForm extends BorderPane {
             return null;
         }
     }
+
+
 
     public void cancelPressed() {
         stage.hide();
