@@ -8,6 +8,7 @@ import javax.naming.Name;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.sql.*;
+import java.util.UUID;
 
 public class MainForm extends BorderPane {
     public TableView<Record> recordsTable;
@@ -43,22 +44,21 @@ public class MainForm extends BorderPane {
 
     }
     public void initialize() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:h2:~/test");  //~ - means that it is LOCAL DATA BASE(not internet)(Home directory)
+        Connection conn = DriverManager.getConnection("jdbc:h2:~/test;AUTO_SERVER=TRUE");  //~ - means that it is LOCAL DATA BASE(not internet)(Home directory)
         Statement stmt = conn.createStatement();
 
         ResultSet rs=stmt.executeQuery("select * from records");
         while (rs.next()){
-
-            String name=rs.getString("name");
-            String email=rs.getString("email");
-            var id=rs.getString("id");
+            var id=(UUID)rs.getObject("ID");
+            var name=rs.getString("name");
+            var email=rs.getString("email");
             var phone=rs.getString("phone");
 
             Record record=new Record();
             record.setPhone(phone);
             record.setEmail(email);
             record.setName(name);
-
+            record.setId(id);
             recordsTable.getItems().add(record);
         }
 

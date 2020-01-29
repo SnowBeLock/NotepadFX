@@ -37,6 +37,12 @@
                         <PropertyValueFactory property="phone"/>
                     </cellValueFactory>
                 </TableColumn>
+                <TableColumn text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id"/>
+                    </cellValueFactory>
+                </TableColumn>
+
             </columns>
         </TableView>
     </center>

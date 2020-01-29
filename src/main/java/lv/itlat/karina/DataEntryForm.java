@@ -2,6 +2,7 @@ package lv.itlat.karina;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -9,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class DataEntryForm extends BorderPane {
 
@@ -16,6 +18,7 @@ public class DataEntryForm extends BorderPane {
     public TextField nameField;
     public TextField emailField;
     public TextField phoneField;
+    public Label idLabel;
 
     private boolean isOk = false;
 
@@ -44,10 +47,15 @@ public class DataEntryForm extends BorderPane {
     public Record showAndGet(Record existingRecord) {
 
         if(existingRecord!=null){
+
+            idLabel.setText(existingRecord.getId().toString());
+
             nameField.setText(existingRecord.getName());
             emailField.setText(existingRecord.getEmail());
             phoneField.setText(existingRecord.getPhone());
             stage.setTitle("Edit record");
+        } else {
+            idLabel.setText(UUID.randomUUID().toString());
         }
         stage.showAndWait();
         if (isOk) {
@@ -55,13 +63,12 @@ public class DataEntryForm extends BorderPane {
             record.setName(nameField.getText());
             record.setEmail(emailField.getText());
             record.setPhone(phoneField.getText());
+            record.setId(UUID.fromString(idLabel.getText()));
             return record;
         } else {
             return null;
         }
     }
-
-
 
     public void cancelPressed() {
         stage.hide();
