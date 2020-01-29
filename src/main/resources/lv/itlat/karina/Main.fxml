@@ -15,7 +15,9 @@
 
         <HBox>
             <Button text="Create" onAction="#addRecord"/>
-            <Button text="Search" onAction="#Search"/>
+            <TextField fx:id="nameSearchText" onKeyTyped="#doSearch"/>
+            <TextField fx:id="emailSearchText" onKeyTyped="#doSearch"/>
+            <TextField fx:id="phoneSearchText" onKeyTyped="#doSearch"/>
             <Button text="Edit" onAction="#editRecord"/>
         </HBox>
     </top>

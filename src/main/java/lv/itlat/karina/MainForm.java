@@ -2,6 +2,7 @@ package lv.itlat.karina;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import javax.naming.Name;
@@ -12,6 +13,9 @@ import java.util.UUID;
 
 public class MainForm extends BorderPane {
     public TableView<Record> recordsTable;
+    public TextField nameSearchText;
+    public TextField emailSearchText;
+    public TextField phoneSearchText;
 
     public MainForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
@@ -20,7 +24,7 @@ public class MainForm extends BorderPane {
         loader.load();
     }
 
-    public void addRecord() {
+    public void addRecord() throws SQLException {
 
 
         DataEntryForm dataEntryWindow = new DataEntryForm(this); //This object can do everything, cause it is it's own owner.
@@ -28,41 +32,31 @@ public class MainForm extends BorderPane {
 
         if (data != null) {
             recordsTable.getItems().add(data);
+            RecordDAO.insertRecord(data);
         }
     }
 
     public void Search() {
         System.out.println("Enter your search");
-
     }
 
-    public void editRecord() {
+    public void editRecord() throws SQLException{
         var selected = recordsTable.getSelectionModel().getSelectedItem();
-            DataEntryForm dataEntryForm=new DataEntryForm(this);
-            dataEntryForm.showAndGet(selected);
-
-
-    }
-    public void initialize() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:h2:~/test;AUTO_SERVER=TRUE");  //~ - means that it is LOCAL DATA BASE(not internet)(Home directory)
-        Statement stmt = conn.createStatement();
-
-        ResultSet rs=stmt.executeQuery("select * from records");
-        while (rs.next()){
-            var id=(UUID)rs.getObject("ID");
-            var name=rs.getString("name");
-            var email=rs.getString("email");
-            var phone=rs.getString("phone");
-
-            Record record=new Record();
-            record.setPhone(phone);
-            record.setEmail(email);
-            record.setName(name);
-            record.setId(id);
-            recordsTable.getItems().add(record);
+        DataEntryForm dataEntryForm = new DataEntryForm(this);
+        if(dataEntryForm.showAndGet(selected)!=null){
+            RecordDAO.updateRecord(selected);
         }
 
-        conn.close();
+
     }
 
+    public void initialize() throws SQLException {
+        var records = RecordDAO.getAllRecords();
+        recordsTable.getItems().setAll(records);
+    }
+    public void doSearch()throws SQLException{
+        var name =nameSearchText.getText();
+        var records=RecordDAO.findRecords(name,"","");
+        recordsTable.getItems().setAll(records);
+    }
 }
