@@ -1,7 +1,9 @@
 package lv.itlat.karina;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -9,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.naming.Binding;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -19,6 +22,7 @@ public class DataEntryForm extends BorderPane {
     public TextField emailField;
     public TextField phoneField;
     public Label idLabel;
+    public Button okButton;
 
     private boolean isOk = false;
 
@@ -42,6 +46,10 @@ public class DataEntryForm extends BorderPane {
             throw new IllegalStateException(e);
         }
 
+    }
+
+    public void initialize(){
+        okButton.disableProperty().bind(Bindings.createBooleanBinding(()->nameField.getText().strip().isBlank(),nameField.textProperty()));
     }
 
     public Record showAndGet(Record existingRecord) {

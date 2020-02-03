@@ -1,14 +1,16 @@
 package lv.itlat.karina;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
+import javax.naming.Binding;
 import javax.naming.Name;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.sql.*;
+import java.util.Optional;
 import java.util.UUID;
 
 public class MainForm extends BorderPane {
@@ -16,6 +18,8 @@ public class MainForm extends BorderPane {
     public TextField nameSearchText;
     public TextField emailSearchText;
     public TextField phoneSearchText;
+    public Button EditButton;
+    public Button DeleteButton;
 
     public MainForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
@@ -36,9 +40,21 @@ public class MainForm extends BorderPane {
         }
     }
 
-    public void Search() {
-        System.out.println("Enter your search");
+    public void deleteRecord() throws SQLException{
+        var selected=recordsTable.getSelectionModel().getSelectedItem();
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete confirmation");
+        alert.setHeaderText("Deleting "+selected.getName());
+        alert.setContentText("Are you sure???!!!");
+
+        Optional<ButtonType> result=alert.showAndWait();
+        if(result.get()==ButtonType.OK){
+            recordsTable.getItems().remove(selected);
+            RecordDAO.deleteRecord(selected);
+        }
     }
+
+
 
     public void editRecord() throws SQLException{
         var selected = recordsTable.getSelectionModel().getSelectedItem();
@@ -53,10 +69,23 @@ public class MainForm extends BorderPane {
     public void initialize() throws SQLException {
         var records = RecordDAO.getAllRecords();
         recordsTable.getItems().setAll(records);
+        DeleteButton.disableProperty().bind(Bindings.createBooleanBinding(()->{
+            return recordsTable.getSelectionModel().getSelectedCells().size()==0;   // Making a button, that is disabled if nothing is selected
+        },recordsTable.getSelectionModel().getSelectedItems()));
+
+        EditButton.disableProperty().bind(Bindings.createBooleanBinding(()->{
+            return recordsTable.getSelectionModel().getSelectedCells().size()==0;   // Making a button, that is disabled if nothing is selected
+        },recordsTable.getSelectionModel().getSelectedItems()));
+
     }
     public void doSearch()throws SQLException{
         var name =nameSearchText.getText();
-        var records=RecordDAO.findRecords(name,"","");
+        var email=emailSearchText.getText();
+        var phone=phoneSearchText.getText();
+        var records=RecordDAO.findRecords(name,email,phone);
         recordsTable.getItems().setAll(records);
     }
+
+
+
 }

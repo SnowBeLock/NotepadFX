@@ -56,19 +56,22 @@ public class RecordDAO {
 
     public static List<Record> findRecords(String fname,String femail, String fphone) throws SQLException{
         var result = new ArrayList<Record>();
-        try (var conn = getConnection(); var stmt = conn.prepareStatement("SELECT * FROM records WHERE name LIKE ?")){ //try WITH RESOURCES
-            stmt.setString(1,"%"+fname+"%");
+        try (var conn = getConnection(); var stmt = conn.prepareStatement("SELECT * FROM records WHERE UPPER(name) LIKE ? AND UPPER(email) LIKE ? AND UPPER(phone) LIKE ?")){ //try WITH RESOURCES
+            stmt.setString(1,"%"+fname.toUpperCase()+"%");
+            stmt.setString(2,"%"+femail.toUpperCase()+"%");
+            stmt.setString(3,"%"+fphone.toUpperCase()+ "%");
             ResultSet rs=stmt.executeQuery();
             while (rs.next()){
                 var name=rs.getString("name");
                 var email=rs.getString("email");
                 var phone=rs.getString("phone");
+                var id=(UUID)rs.getObject("ID");
 
                 Record record=new Record();
                 record.setPhone(phone);
                 record.setEmail(email);
                 record.setName(name);
-
+                record.setId(id);
                 result.add(record);
             }
             return result;
@@ -103,5 +106,13 @@ public class RecordDAO {
             stmt.executeUpdate();
         }
 
+    }
+
+    public static void deleteRecord(Record record)throws SQLException{
+        try(var conn=getConnection(); var stmt=conn.prepareStatement("DELETE FROM records WHERE id=?")) {
+            stmt.setObject(1,record.getId());
+
+            stmt.executeUpdate();
+        }
     }
 }

@@ -18,7 +18,8 @@
             <TextField fx:id="nameSearchText" onKeyTyped="#doSearch"/>
             <TextField fx:id="emailSearchText" onKeyTyped="#doSearch"/>
             <TextField fx:id="phoneSearchText" onKeyTyped="#doSearch"/>
-            <Button text="Edit" onAction="#editRecord"/>
+            <Button fx:id="EditButton" text="Edit" onAction="#editRecord"/>
+            <Button fx:id="DeleteButton" text="Удалить" onAction="#deleteRecord"/>
         </HBox>
     </top>
     <center>
